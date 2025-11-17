@@ -1,7 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Sidebar from "./Sidebar";
-import ChildWorkorder from "./pages/ChildWorkorder";
+import ChildWorkorder from "./ChildWorkorder";
 import SearchWorkOrder from "./SearchWorkOrder";
 
 // import "./css/sidebar.css";  // if needed for sidebar
