@@ -1,0 +1,277 @@
+import React, { useState, useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Eye, EyeOff } from "lucide-react";
+import "./css/CompanyLogin.css";
+import { BASE_URLS } from "../../api/api";
+
+function CompanyLogin({setContractor}) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [userCaptchaInput, setUserCaptchaInput] = useState("");
+  const [generatedCaptchaCode, setGeneratedCaptchaCode] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
+  const [fieldErrors, setFieldErrors] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [captchaImage, setCaptchaImage] = useState("");
+  const navigate = useNavigate();
+  const location = useLocation();
+  const message = location.state?.message;
+
+  // ✅ Generate Captcha
+  const generateCaptcha = () => {
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    let code = "";
+    for (let i = 0; i < 6; i++) {
+      code += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+
+    setGeneratedCaptchaCode(code);
+    setUserCaptchaInput("");
+
+    const canvas = document.createElement("canvas");
+    canvas.width = 120;
+    canvas.height = 40;
+    const ctx = canvas.getContext("2d");
+
+    const gradient = ctx.createLinearGradient(0, 0, 120, 40);
+    gradient.addColorStop(0, "#f8f9ff");
+    gradient.addColorStop(1, "#e8f0ff");
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, 120, 40);
+
+    ctx.strokeStyle = "#e1e5e9";
+    ctx.lineWidth = 2;
+    ctx.strokeRect(1, 1, 118, 38);
+
+    ctx.strokeStyle = "rgba(0,0,0,0.1)";
+    for (let i = 0; i < 5; i++) {
+      ctx.beginPath();
+      ctx.moveTo(Math.random() * 120, Math.random() * 40);
+      ctx.lineTo(Math.random() * 120, Math.random() * 40);
+      ctx.stroke();
+    }
+
+    ctx.font = "bold 24px Arial, sans-serif";
+    ctx.fillStyle = "#1e40af";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+
+    for (let i = 0; i < code.length; i++) {
+      ctx.save();
+      ctx.translate(15 + i * 18, 20);
+      ctx.rotate((Math.random() - 0.5) * 0.3);
+      ctx.fillText(code[i], 0, 0);
+      ctx.restore();
+    }
+
+    setCaptchaImage(canvas.toDataURL());
+  };
+
+  useEffect(() => {
+    generateCaptcha();
+  }, []);
+
+  const refreshCaptcha = () => {
+    generateCaptcha();
+    setFieldErrors((prev) => ({ ...prev, captcha: "" }));
+  };
+
+  const validateForm = () => {
+    const errors = {};
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!email.trim()) {
+      errors.email = "Email is required.";
+    } else if (!emailRegex.test(email)) {
+      errors.email = "Please enter a valid email address.";
+    }
+
+    if (!password.trim()) {
+      errors.password = "Password is required.";
+    } else if (password.length < 8) {
+      errors.password = "Password must be at least 8 characters.";
+    }
+
+    if (!userCaptchaInput.trim()) {
+      errors.captcha = "Enter the code shown above.";
+    } else if (
+      userCaptchaInput.toUpperCase() !== generatedCaptchaCode.toUpperCase()
+    ) {
+      errors.captcha = "Incorrect captcha. Please try again.";
+    }
+
+    setFieldErrors(errors);
+    return { errors, isValid: Object.keys(errors).length === 0 };
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+
+    const { errors, isValid } = validateForm();
+    
+    if (!isValid) {
+      // ✅ FIXED: Auto-refresh CAPTCHA on validation failure (esp. incorrect input)
+      if (errors.captcha) {
+        // Show error briefly, then refresh
+        setTimeout(() => {
+          refreshCaptcha();
+        }, 1500);
+      }
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const response = await fetch(`${BASE_URLS.user}/api/contractor/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        navigate("/contractor/verify_otp", { state: { email } });
+        localStorage.setItem("contractor", JSON.stringify(data.contractor));
+        setContractor(data.contractor);
+        setEmail("");
+        setPassword("");
+        setUserCaptchaInput("");
+        generateCaptcha();
+      } else {
+        setError(data.error || "Login failed. Please try again.");
+        generateCaptcha();
+      }
+    } catch (err) {
+      setError("An error occurred. Please try again.");
+      generateCaptcha();
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="contractor-login-container">
+      <div className="login-card">
+        <h2 className="login-title">Contractor Login</h2>
+        <p className="login-subtitle">Access your company dashboard</p>
+
+        {error && <p className="login-error">{error}</p>}
+        {message && <p className="success-message">{message}</p>}
+
+        <form onSubmit={handleSubmit} className="login-form">
+          <div className="form-group">
+            <label>Email Address</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => {
+                const value = e.target.value;
+                setEmail(value);
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (emailRegex.test(value)) {
+                  setFieldErrors((prev) => ({ ...prev, email: "" }));
+                }
+              }}
+              placeholder="Enter your email"
+              disabled={loading}
+            />
+            {fieldErrors.email && (
+              <span className="error-text">{fieldErrors.email}</span>
+            )}
+          </div>
+
+          <div className="form-group password-group">
+            <label>Password</label>
+            <div className="password-wrapper">
+              <input
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  setPassword(value);
+                  if (value.length >= 8) {
+                    setFieldErrors((prev) => ({ ...prev, password: "" }));
+                  }
+                }}
+                placeholder="Enter your password"
+                disabled={loading}
+              />
+              <span
+                className="password-toggle"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </span>
+            </div>
+            {fieldErrors.password && (
+              <span className="error-text">{fieldErrors.password}</span>
+            )}
+          </div>
+
+          <div className="form-group captcha-group">
+            <label>Captcha</label>
+            <div className="captcha-container">
+              <div className="captcha-image-wrapper">
+                {captchaImage && (
+                  <img src={captchaImage} alt="Captcha" className="captcha-image" />
+                )}
+                <button
+                  type="button"
+                  className="refresh-captcha"
+                  onClick={refreshCaptcha}
+                  disabled={loading}
+                  title="Refresh Captcha"
+                >
+                  🔄
+                </button>
+              </div>
+              <input
+                type="text"
+                className="captcha-input"
+                value={userCaptchaInput}
+                onChange={(e) => {
+                  const value = e.target.value.toUpperCase();
+                  setUserCaptchaInput(value);
+                  if (fieldErrors.captcha) {
+                    setFieldErrors((prev) => ({ ...prev, captcha: "" }));
+                  }
+                }}
+                placeholder="Enter the code shown above"
+                disabled={loading}
+                maxLength={6}
+              />
+            </div>
+            {fieldErrors.captcha && (
+              <span className="error-text">{fieldErrors.captcha}</span>
+            )}
+          </div>
+
+          <button
+            type="submit"
+            className="login-button"
+            disabled={loading || Object.values(fieldErrors).some((msg) => msg)}
+          >
+            {loading ? (
+              <>
+                <span className="spinner"></span> Signing In...
+              </>
+            ) : (
+              "Continue"
+            )}
+          </button>
+        </form>
+
+        <p className="signup-link">
+          Don’t have an account?{" "}
+          <Link to="/contractor/signup" className="link">
+            SignUp
+          </Link>
+        </p>
+      </div>
+    </div>
+  );
+}
+
+export default CompanyLogin;

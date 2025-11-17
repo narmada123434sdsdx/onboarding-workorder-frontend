@@ -1,0 +1,140 @@
+.contractor-login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  font-family: "Poppins", sans-serif;
+}
+
+.login-card {
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  padding: 40px 30px;
+  width: 100%;
+  max-width: 450px;
+}
+
+.login-title {
+  text-align: center;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.login-subtitle {
+  text-align: center;
+  color: #555;
+  margin-bottom: 25px;
+}
+
+.login-form label {
+  font-weight: 600;
+  color: #333;
+}
+
+.login-form input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+  transition: border 0.3s;
+}
+
+.login-form input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.password-wrapper {
+  position: relative;
+}
+
+.password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #777;
+}
+
+.captcha-group {
+  margin-top: 10px;
+}
+
+.captcha-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.captcha-image-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f4f7ff;
+  border-radius: 6px;
+  padding: 6px 10px;
+  margin-bottom: 10px;
+}
+
+.captcha-image {
+  height: 40px;
+}
+
+.refresh-captcha {
+  border: none;
+  background: transparent;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.login-button {
+  width: 100%;
+  background: #007bff;
+  color: #fff;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: background 0.3s ease;
+}
+
+.login-button:hover {
+  background: #0056b3;
+}
+
+.signup-link {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.link {
+  color: #007bff;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.error-text {
+  color: red;
+  font-size: 13px;
+}
+
+.login-error {
+  color: red;
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.success-message {
+  color: green;
+  text-align: center;
+  font-weight: 600;
+}

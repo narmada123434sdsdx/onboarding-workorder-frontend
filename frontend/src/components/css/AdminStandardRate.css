@@ -1,0 +1,83 @@
+/* ---------- Improved Responsive Table Styling ---------- */
+
+@media (max-width: 768px) {
+  table.table {
+    display: block;
+    border: none;
+    background: transparent;
+  }
+
+  table.table thead {
+    display: none;
+  }
+
+  table.table tbody {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  table.table tbody tr {
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    padding: 1rem 1.25rem;
+    border: 1px solid #e5e7eb;
+  }
+
+  table.table tbody td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    font-size: 0.95rem;
+    color: #374151;
+    border-bottom: 1px solid #f1f1f1;
+  }
+
+  table.table tbody td:last-child {
+    border-bottom: none;
+    padding-top: 12px;
+  }
+
+  table.table tbody td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: #000000;
+    font-size: 0.9rem;
+  }
+
+  /* Buttons styling for mobile */
+  .btn-warning, .btn-danger {
+    width: 48%;
+    font-size: 0.9rem;
+    padding: 8px 0;
+    border-radius: 6px;
+    font-weight: 500;
+  }
+
+  .btn-warning {
+    background-color: #fbbf24;
+    border: none;
+    color: #111827;
+  }
+
+  .btn-danger {
+    background-color: #ef4444;
+    border: none;
+  }
+
+  td[data-label="Actions"] {
+    justify-content: center;
+    gap: 8px;
+  }
+
+  /* Make cards pop a bit more */
+  table.table tbody tr:hover {
+    transform: translateY(-2px);
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+  }
+}
