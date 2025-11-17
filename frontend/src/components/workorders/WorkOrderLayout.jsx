@@ -1,7 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Sidebar from "./Sidebar";
-import ChildWorkOrder from "./pages/ChildWorkorder";
+import ChildWorkorder from "./pages/ChildWorkorder";
 import SearchWorkOrder from "./SearchWorkOrder";
 
 // import "./css/sidebar.css";  // if needed for sidebar
@@ -24,7 +24,7 @@ export default function WorkOrderLayout() {
         <Routes>
           <Route path="/" element={<WorkOrders/>} />
           <Route path="/create-workorder" element={<CreateWorkOrder />} />
-          <Route path="/child-workorder" element={<ChildWorkOrder />} />
+          <Route path="/child-workorder" element={<ChildWorkorder />} />
           <Route path="/mapping-workorder" element={<MappingPage />} />
           <Route path="/workorder-type" element={<WorkOrderTypePage />} />
           <Route path="/workorder-area" element={<WorkOrderAreaPage />} />                 
