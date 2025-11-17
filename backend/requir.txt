@@ -1,0 +1,8 @@
+To know the backend installed packages:
+
+cd backend
+pip install pipreqs
+pipreqs .
+
+to know the installed packages in frontend:
+npm list or package.json file
