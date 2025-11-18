@@ -36,32 +36,32 @@ function Home({user}) {
             {[
               {
   title: "Home Cleaning",
-  img: "/assets/home_cleaning.jpeg",
+  img: "/assets/images/home_cleaning.jpeg",
   desc: "Professional deep cleaning for a sparkling home.",
 },
 {
   title: "Salon at Home",
-  img: "/assets/home_salon.jpeg",
+  img: "/assets/images/home_salon.jpeg",
   desc: "Beauty & grooming by certified experts.",
 },
 {
   title: "AC Repair",
-  img: "/assets/ac_repair.jpeg",
+  img: "/assets/images/ac_repair.jpeg",
   desc: "Reliable and fast air conditioner servicing.",
 },
 {
   title: "Electrician",
-  img: "/assets/electrician.jpeg",
+  img: "/assets/images/electrician.jpeg",
   desc: "Expert help for wiring, installation & lighting.",
 },
 {
   title: "Plumbing",
-  img: "/assets/plumbing.jpeg",
+  img: "/assets/images/plumbing.jpeg",
   desc: "Fix leaks and blockages quickly and affordably.",
 },
 {
   title: "Pest Control",
-  img: "/assets/pest_control.jpeg",
+  img: "/assets/images/pest_control.jpeg",
   desc: "Safe and eco-friendly pest removal solutions.",
 },
             ].map((service, index) => (
