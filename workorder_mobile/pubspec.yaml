@@ -11,9 +11,11 @@ dependencies:
   flutter:
     sdk: flutter
 
-  webview_flutter: ^4.4.0
+  webview_flutter: ^4.7.0
+  webview_flutter_android: ^3.8.0
   cupertino_icons: ^1.0.8
   network_info_plus: ^5.0.3
+  url_launcher: ^6.2.5
 
 dev_dependencies:
   flutter_test:

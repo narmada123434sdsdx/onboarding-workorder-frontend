@@ -35,35 +35,35 @@ function Home({user}) {
           <div className="row g-4">
             {[
               {
-                title: "Home Cleaning",
-                img: "../src/assets/images/home_cleaning.jpeg",
-                desc: "Professional deep cleaning for a sparkling home.",
-              },
-              {
-                title: "Salon at Home",
-                img: "../src/assets/images/home_salon.jpeg",
-                desc: "Beauty & grooming by certified experts.",
-              },
-              {
-                title: "AC Repair",
-                img: "../src/assets/images/ac_repair.jpeg",
-                desc: "Reliable and fast air conditioner servicing.",
-              },
-              {
-                title: "Electrician",
-                img: "../src/assets/images/electrician.jpeg",
-                desc: "Expert help for wiring, installation & lighting.",
-              },
-              {
-                title: "Plumbing",
-                img: "../src/assets/images/plumbing.jpeg",
-                desc: "Fix leaks and blockages quickly and affordably.",
-              },
-              {
-                title: "Pest Control",
-                img: "../src/assets/images/pest_control.jpeg",
-                desc: "Safe and eco-friendly pest removal solutions.",
-              },
+  title: "Home Cleaning",
+  img: "/assets/home_cleaning.jpeg",
+  desc: "Professional deep cleaning for a sparkling home.",
+},
+{
+  title: "Salon at Home",
+  img: "/assets/home_salon.jpeg",
+  desc: "Beauty & grooming by certified experts.",
+},
+{
+  title: "AC Repair",
+  img: "/assets/ac_repair.jpeg",
+  desc: "Reliable and fast air conditioner servicing.",
+},
+{
+  title: "Electrician",
+  img: "/assets/electrician.jpeg",
+  desc: "Expert help for wiring, installation & lighting.",
+},
+{
+  title: "Plumbing",
+  img: "/assets/plumbing.jpeg",
+  desc: "Fix leaks and blockages quickly and affordably.",
+},
+{
+  title: "Pest Control",
+  img: "/assets/pest_control.jpeg",
+  desc: "Safe and eco-friendly pest removal solutions.",
+},
             ].map((service, index) => (
               <div className="col-12 col-sm-6 col-lg-4" key={index}>
                 <div className="card h-100 shadow-sm border-0 service-card">

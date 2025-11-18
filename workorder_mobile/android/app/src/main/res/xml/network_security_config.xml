@@ -8,6 +8,6 @@
     </base-config>
 
     <domain-config cleartextTrafficPermitted="true">
-        <domain includeSubdomains="true">frontend-beige-sigma-63.vercel.app</domain>
+        <domain includeSubdomains="true">onboarding-workorder-frontend.vercel.app</domain>
     </domain-config>
 </network-security-config>
